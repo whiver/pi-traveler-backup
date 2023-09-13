@@ -1,0 +1,1 @@
+ACTION=="add", KERNEL=="sd?", SUBSYSTEM=="block", ENV{ID_BUS}=="usb", ATTRS{devpath}=="1.2", ENV{SYSTEMD_WANTS}="photo-backup.service"
