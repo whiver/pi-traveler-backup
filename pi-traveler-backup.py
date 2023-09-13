@@ -1,10 +1,42 @@
 import RPi.GPIO as GPIO # Import Raspberry Pi GPIO library
 import subprocess
+import psutil
 import os
 import signal
+import Adafruit_GPIO.SPI as SPI
+import Adafruit_SSD1306
+from PIL import Image
+from PIL import ImageDraw
+from PIL import ImageFont
 
 running = False
 pid = ""
+
+RST = None
+DC = 23
+SPI_PORT = 0
+SPI_DEVICE = 0
+disp = Adafruit_SSD1306.SSD1306_128_32(rst=RST)
+disp.begin()
+disp.clear()
+disp.display()
+
+def draw(first, second):
+    global disp
+
+    width = disp.width
+    height = disp.height
+    image = Image.new('1', (width, height))
+    draw = ImageDraw.Draw(image)
+    draw.rectangle((0,0,width,height), outline=0, fill=0)
+    padding = -2
+    top = padding
+    font = ImageFont.truetype("Arial_Bold.ttf", 16, encoding="unic")
+    littlefont = font = ImageFont.truetype("Arial_Bold.ttf", 12, encoding="unic")
+    draw.text((0, top), text=first, font=font, fill=255)
+    draw.text((0, top+18), text=second, font=littlefont, fill=255)
+    disp.image(image)
+    disp.display()
 
 def button_callback(channel):
     global running
@@ -15,15 +47,23 @@ def button_callback(channel):
     if (running):
         instance = subprocess.Popen(["/home/hackathon/photo.sh"])
         pid = instance.pid
+
+        draw("Starting up...", "Please wait...")
     else:
-        os.kill(pid, signal.SIGTERM)
-        
-GPIO.setwarnings(False) # Ignore warning for now
-GPIO.setmode(GPIO.BOARD) # Use physical pin numbering
-GPIO.setup(10, GPIO.IN, pull_up_down=GPIO.PUD_DOWN) # Set pin 10 to be an input pin and set initial value to be pulled low (off)
+        print("Let's kill " + str(pid))
+        parent = psutil.Process(pid)
+        for child in parent.children(recursive=True):  # or parent.children() for recursive=False
+            os.kill(child.pid, signal.SIGTERM)
+        os.kill(parent.pid, signal.SIGTERM)
 
-GPIO.add_event_detect(10,GPIO.RISING,callback=button_callback) # Setup event on pin 10 rising edge
+        draw("Copy stopped", "Press button to restart.")
 
-message = input("Press enter to quit\n\n") # Run until someone presses enter
 
-GPIO.cleanup() # Clean up
+#main 
+draw("Hello :)", "Please press button.")
+
+GPIO.setup(15, GPIO.IN, pull_up_down=GPIO.PUD_DOWN) # Set pin 15 to be an input pin and set initial value to be pulled low (off)
+GPIO.add_event_detect(15, GPIO.RISING, callback=button_callback, bouncetime=500) # Setup event on pin 15 rising edge
+while True:
+    # infinite loop
+    pass
