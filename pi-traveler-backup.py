@@ -45,16 +45,21 @@ def button_callback(channel):
     print("Button was pushed! " + str(running))
 
     if (running):
-        instance = subprocess.Popen(["/home/hackathon/photo.sh"])
+        instance = subprocess.Popen(["/home/hackathon/backup.sh"])
         pid = instance.pid
-
         draw("Starting up...", "Please wait...")
+        instance.wait()
+        draw("Copy finished!", "Press to start again.")
+        running = False
+        
     else:
         print("Let's kill " + str(pid))
         parent = psutil.Process(pid)
         for child in parent.children(recursive=True):  # or parent.children() for recursive=False
             os.kill(child.pid, signal.SIGTERM)
+            
         os.kill(parent.pid, signal.SIGTERM)
+        parent.wait()
 
         draw("Copy stopped", "Press button to restart.")
 
@@ -63,7 +68,6 @@ def button_callback(channel):
 draw("Hello :)", "Please press button.")
 
 GPIO.setup(15, GPIO.IN, pull_up_down=GPIO.PUD_DOWN) # Set pin 15 to be an input pin and set initial value to be pulled low (off)
-GPIO.add_event_detect(15, GPIO.RISING, callback=button_callback, bouncetime=500) # Setup event on pin 15 rising edge
+GPIO.add_event_detect(15, GPIO.RISING, callback=button_callback, bouncetime=5000) # Setup event on pin 15 rising edge
 while True:
-    # infinite loop
     pass

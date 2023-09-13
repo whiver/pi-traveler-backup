@@ -1,0 +1,13 @@
+[Unit]
+Description=USB backup module for Raspberry
+
+[Service]
+Type=simple
+ExecStart=python /home/hackathon/pi-traveler-backup.py
+Restart=on-failure
+RestartSec=10
+KillMode=mixed
+User=hackathon
+
+[Install]
+WantedBy=multi-user.target

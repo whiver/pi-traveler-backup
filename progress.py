@@ -4,6 +4,7 @@ import Adafruit_SSD1306
 from PIL import Image
 from PIL import ImageDraw
 from PIL import ImageFont
+import random
 import sys
 
 def readlines():
@@ -87,8 +88,10 @@ bottom = height-padding
 # Move left to right keeping track of the current x position for drawing shapes.
 x = 0
 
+
+# Load default font.
 littlefont = font = ImageFont.truetype("Arial_Bold.ttf", 12, encoding="unic")
-font = ImageFont.truetype("Arial_Bold.ttf", 16, encoding="unic") 
+font = ImageFont.truetype("Arial_Bold.ttf", 16, encoding="unic") # comicbd.ttf
 
 percentage = ""
 photos = ""
