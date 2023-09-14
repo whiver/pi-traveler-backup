@@ -8,12 +8,16 @@ unmount_devices() {
 abort() {
     echo "Received signal, exiting..."
 
-    rsyncPid=$(pgrep rsync)
-    
-    if [ -n "$rsyncPid" ]
+    rsyncPids=($(pgrep -d " " rsync))
+
+    if [ -n "$rsyncPids" ]
     then
-        echo "Rsync still running, waiting..."
-        timeout 10 tail --pid=$rsyncPid -f /dev/null
+        echo "Rsync still running (pid ${rsyncPids}), waiting..."
+
+        for rsyncPid in "${rsyncPids[@]}"
+        do
+            timeout 10 tail --pid=$rsyncPid -f /dev/null
+        done
     fi
 
     echo "Try unmounting partitions..."
