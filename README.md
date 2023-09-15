@@ -5,7 +5,7 @@ A hackathon project to turn your Raspberry into a standalone offline backup modu
 
 ## How to use it
 - Plug the USB drives that way:  
-  ![Image describing the USB ports used for pi-traveler-backup](https://github.com/whiver/pi-traveler-backup/assets/394565/9ecd7db3-177f-4e1b-9a05-1e4f9ce87499)
+  ![Image describing the USB ports used for pi-traveler-backup](https://github.com/whiver/pi-traveler-backup/assets/394565/703e165d-7cfe-4fa4-95c7-405bdc4308a4)
 
 ## Setup
 
@@ -26,7 +26,7 @@ To run this project you need to have:
 
 We'll use this documentation page as a reference: https://www.raspberrypi.com/documentation/computers/raspberry-pi.html#gpio-and-the-40-pin-header
 
-![Raspberry GPIO reference](https://github.com/whiver/pi-traveler-backup/assets/394565/e95781c6-4d0d-4e07-baf1-7b0e0d85a301)
+![Raspberry GPIO reference](https://github.com/whiver/pi-traveler-backup/assets/394565/882da75c-ffa2-4dfb-9d3e-98e42fa484d6)
 
 
 - Plug the LCD screen to the pins 1 (VCC),2 ,5 and 9 (GND)
