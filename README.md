@@ -1,6 +1,8 @@
 # pi-traveler-backup
 A hackathon project to turn your Raspberry into a standalone offline backup module. Never loose your precious travel photos again!
 
+[![Project demo video](https://github.com/whiver/pi-traveler-backup/assets/394565/32cc5544-e8ec-4aa0-8dc4-3f6ab35d4fcd)](http://www.youtube.com/watch?v=9dVFOzRHLBg)
+
 ## How to use it
 - Plug the USB drives that way:  
   ![Image describing the USB ports used for pi-traveler-backup](https://github.com/whiver/pi-traveler-backup/assets/394565/9ecd7db3-177f-4e1b-9a05-1e4f9ce87499)
