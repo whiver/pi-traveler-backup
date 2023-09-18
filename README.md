@@ -32,11 +32,13 @@ We'll use this documentation page as a reference: https://www.raspberrypi.com/do
 - Plug the LCD screen to the pins 1 (VCC),2 ,5 and 9 (GND)
 - Plug the button to the pin 10 (RXD) and 1 (VCC)
 - (Optional) The USB drives to use for the backup are hardcoded for the Raspberry Pi 3b. If you have another Raspberry Pi or want to change these ports, you'll need to update the devices to use in [`backup.sh`](https://github.com/whiver/pi-traveler-backup/blob/d52d24e5242958993a57fcc4b60bb6f3144560b3/backup.sh#L31-L32).
-- 
+
 ### 2. Raspberry setup
 
+1. Create a user named `hackathon` and add it to the `storage` group
 1. Add Polkit permissions to mount the drive as user level : copy `10-udisk.pkla` from this project to `/etc/polkit-1/localauthority/50-local.d/10-udisks.pkla`  
 
    > ⚠️ This works only for old versions of Policy Kit which support only this config file format. This is the case as of today on current Raspbian images. If you see a folder `/etc/polkit-1/localauthority/` it means that it will also work for you. Otherwise, you need to use the Javascript format ([take a look here](https://github.com/coldfix/udiskie/wiki/Permissions)).
 
 2. Setup the background service to launch on startup: copy `photo-backup.service` from this project to `/etc/systemd/system/photo-backup.service`
+3. Restart!
